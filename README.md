@@ -1,22 +1,12 @@
-# Getting Started
+# WE ARE FIVE BACKEND
 
-### Reference Documentation
-For further reference, please consider the following sections:
+Repositorio dedicado a la sección frontend del proyecto We ARE FIVE.
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.5.6/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.5.6/maven-plugin/reference/html/#build-image)
-* [Validation](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#boot-features-validation)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#boot-features-jpa-and-spring-data)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#using-boot-devtools)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#boot-features-developing-web-applications)
 
-### Guides
-The following guides illustrate how to use some features concretely:
 
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+## Reglas de uso
+
+- NO trabajar sobre la rama main
+- trabajar sobre la rama con nombre de cada uno
+- Para subir cambios las ramas individuales deben ser pusheadas al repositorio y una vez allí se debe crear un pull request hacia la rama develop
 
