@@ -1,6 +1,6 @@
 package com.culturaweb.wearefive.controller;
 
-import com.culturaweb.wearefive.dto.ZapatoDTO;
+import com.culturaweb.wearefive.model.dto.ZapatoDTO;
 import com.culturaweb.wearefive.service.IZapatosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
