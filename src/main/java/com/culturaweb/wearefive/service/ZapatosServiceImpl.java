@@ -12,5 +12,5 @@ public class ZapatosServiceImpl implements IZapatosService{
         System.out.println("nombre: " + payload.getNombre());
         System.out.println("modelo: " + payload.getModelo());
     }
-    
+
 }

@@ -1,5 +1,4 @@
 package com.culturaweb.wearefive.model.dto;
-
 import lombok.Getter;
 import lombok.Setter;
 

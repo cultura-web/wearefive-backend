@@ -1,51 +1,60 @@
 package com.culturaweb.wearefive.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import com.culturaweb.wearefive.model.dto.JwtTokenResponseDTO;
+import com.culturaweb.wearefive.security.JwtTokenUtil;
+import com.culturaweb.wearefive.model.dto.UserDTO;
+import com.culturaweb.wearefive.service.JwtUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.culturaweb.wearefive.model.domain.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
 @RestController
+@CrossOrigin
 public class UserController {
 
-    @PostMapping("/user")
-    public User login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-        String token = getJWTToken(username);
-        User user = new User();
-        user.setUser(username);
-        user.setToken(token);
-        return user;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    JwtUserDetailService userDetailsService;
+
+    @PostMapping("/authenticate")
+    public JwtTokenResponseDTO authenticate(@RequestBody UserDTO userRequest) throws Exception {
+        authenticate(userRequest.getUsername(), userRequest.getPassword());
+
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(userRequest.getUsername());
+
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        return new JwtTokenResponseDTO(token);
     }
 
-    private String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.registerUser(user));
+    }
 
-        String token = Jwts
-                .builder()
-                .setId("softtekJWT")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
-                .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
-
-        return "Bearer " + token;
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
     }
 }
+

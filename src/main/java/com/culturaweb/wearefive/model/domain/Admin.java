@@ -1,28 +1,25 @@
 package com.culturaweb.wearefive.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Getter @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+@Getter @Setter
+@Table(name = "admin")
+@Entity
+public class Admin implements Serializable {
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String token;
-
-    private String user;
-
-    //@JsonIgnore
-    private String password;
-
+    private Integer id;
 }
