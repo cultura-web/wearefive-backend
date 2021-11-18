@@ -1,6 +1,6 @@
 package com.culturaweb.wearefive.service;
 
-import com.culturaweb.wearefive.model.dto.ZapatoDTO;
+import com.culturaweb.wearefive.dto.ZapatoDTO;
 
 
 public interface IZapatosService {

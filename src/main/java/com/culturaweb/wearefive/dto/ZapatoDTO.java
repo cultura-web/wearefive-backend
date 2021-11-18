@@ -1,4 +1,4 @@
-package com.culturaweb.wearefive.model.dto;
+package com.culturaweb.wearefive.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

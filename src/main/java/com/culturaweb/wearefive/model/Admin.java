@@ -1,4 +1,4 @@
-package com.culturaweb.wearefive.model.domain;
+package com.culturaweb.wearefive.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
