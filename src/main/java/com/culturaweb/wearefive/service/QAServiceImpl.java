@@ -29,4 +29,24 @@ public class QAServiceImpl implements IQAService{
         qa.setAdmin(a);
         this.iqaRepository.save(qa);
     }
+    @Override
+    public void editarQA(int Id,QADTO QAdto) {
+        QA qa=this.iqaRepository.getById(Id);
+        QA qanew = this.modelMapper.map(QAdto,QA.class);
+        qa.setPregunta(qanew.getPregunta());
+        qa.setRespuesta(qanew.getRespuesta());
+        this.iqaRepository.save(qa);
+    }
+    @Override
+    public void eliminarQA(int id) {
+
+    }
+
+
+//    @Override
+//    public void eliminarQA(int id) {
+//        Optional<QA> qa= this.iqaRepository.findById(id);
+//        Optional<Admin> optional = this.adminRepository.findById(1);
+//        this.iqaRepository.delete(qa);
+//    }
 }
