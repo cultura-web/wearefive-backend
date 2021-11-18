@@ -10,7 +10,7 @@ public abstract class DummyUserDAO implements IUserDAO {
     @Override
     public Usuario findByUsername(String username) throws UsernameNotFoundException {
         if ("prueba".equals(username)) {
-            return new Usuario(0, "prueba", "$2a$10$1AkCYfq/LV3j4dg669wN2OuorEjSJM3vAWC1jSOdgiCOcBfDNcg92");
+            return new Usuario(0, "prueba", "$2a$10$1AkCYfq/LV3j4dg669wN2OuorEjSJM3vAWC1jSOdgiCOcBfDNcg92","user1","1234","example@gmail.com");
         } else throw new UsernameNotFoundException("User not found with username: " + username);
     }
 }

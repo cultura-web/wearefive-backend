@@ -22,9 +22,20 @@ public class Usuario {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "nombres", length = 45)
+    private String nombres;
+
+    @Column(name = "apellidos", length = 45)
+    private String apellidos;
+
     @Column(name = "username", length = 45)
     private String username;
 
     @Column(name = "`contrasena`", length = 45)
     private String password;
+
+    @Column(name = "correo", length = 45)
+    private String correo;
+
+
 }
