@@ -21,24 +21,22 @@ public class QARestController {
     @Autowired
     QAServiceImpl qaService;
 
-    @PostMapping("/q&a/new")
-    public ResponseEntity<String> agregarNuevoZapato(@RequestBody QADTO payload)
-    {
+    @PostMapping("/qa/new")
+    public ResponseEntity<String> agregarQA(@RequestBody QADTO payload) {
         this.qaService.agregarQA(payload);
         return new ResponseEntity<>("pregunta y respuesta agregadas con éxito", HttpStatus.OK);
     }
-    @PutMapping("/q&a/edit/{id}")
-    public ResponseEntity<String> editarNuevoZapato(@PathVariable(value = "id") int id,@RequestBody QADTO payload)
-    {
-        return new ResponseEntity<>("ID: " + id, HttpStatus.OK);
-        //this.qaService.editarQA(Id,payload);
-        //return new ResponseEntity<>("pregunta y respuesta editada con éxito", HttpStatus.OK);
+
+    @PutMapping("/qa/edit/{id}")
+    public ResponseEntity<String> editarQA(@PathVariable(value = "id") int id, @RequestBody QADTO payload) {
+        this.qaService.editarQA(id, payload);
+        return new ResponseEntity<>("pregunta y respuesta editada con éxito", HttpStatus.OK);
 
     }
-        @DeleteMapping("/q&a/delete/{id}")
-   public ResponseEntity<String> eliminarNuevoZapato(@PathVariable(value = "id") int id)
-   {
-       this.qaService.eliminarQA(id);
-       return new ResponseEntity<>("pregunta y respuesta eliminada con éxito", HttpStatus.OK);
-   }
+
+    @DeleteMapping("/qa/delete/{id}")
+    public ResponseEntity<String> eliminarQA(@PathVariable(value = "id") int id) {
+        this.qaService.eliminarQA(id);
+        return new ResponseEntity<>("pregunta y respuesta eliminada con éxito", HttpStatus.OK);
+    }
 }

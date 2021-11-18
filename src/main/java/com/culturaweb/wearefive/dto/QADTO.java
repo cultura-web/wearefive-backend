@@ -7,7 +7,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class QADTO {
     private String pregunta;
     private String respuesta;
