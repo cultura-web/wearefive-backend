@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("zapatos")
 public class AdminRestController {
-    
+
     @Autowired
     IZapatosService zapatosService;
-    
+
     @PostMapping("/new")
     public ResponseEntity<String> agregarNuevoZapato(@RequestBody ZapatoDTO payload)
     {
         this.zapatosService.agregarZapato(payload);
         return new ResponseEntity<>("zapato agregado con éxito",HttpStatus.OK);
     }
-    
+
 }

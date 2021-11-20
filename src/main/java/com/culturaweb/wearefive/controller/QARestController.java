@@ -2,9 +2,7 @@ package com.culturaweb.wearefive.controller;
 
 import com.culturaweb.wearefive.dto.QADTO;
 import com.culturaweb.wearefive.dto.QAsDTO;
-import com.culturaweb.wearefive.dto.ZapatoDTO;
 import com.culturaweb.wearefive.model.ApiError;
-import com.culturaweb.wearefive.model.QA;
 import com.culturaweb.wearefive.service.QAServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
