@@ -1,6 +1,5 @@
 package com.culturaweb.wearefive.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +31,8 @@ public class Usuario {
     private String username;
 
     @Column(name = "`contrasena`", length = 45)
-    private String password;
+    private String contrasena;
 
     @Column(name = "correo", length = 45)
     private String correo;
-
-
 }
