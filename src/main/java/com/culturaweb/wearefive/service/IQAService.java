@@ -9,7 +9,7 @@ import java.util.List;
 public interface IQAService {
 
     public QAsDTO listarQA();
-    public void agregarQA(QADTO QAdto);
+    public String agregarQA(QADTO QAdto);
 
     public void editarQA(int id, QADTO QAdto);
 

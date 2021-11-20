@@ -40,14 +40,15 @@ public class QAServiceImpl implements IQAService {
     }
 
     @Override
-    public void agregarQA(QADTO QAdto) {
+    public String agregarQA(QADTO QAdto) {
         QA qa = this.modelMapper.map(QAdto, QA.class);
         if (qa.getPregunta().isEmpty()||qa.getRespuesta().isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Actor Not Found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "empty fields");
         Optional<Admin> optional = this.adminRepository.findById(1);
         Admin a = optional.get();
         qa.setAdmin(a);
         this.iqaRepository.save(qa);
+        return "OK";
     }
 
     @Override
