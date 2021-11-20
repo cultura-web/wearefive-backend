@@ -34,6 +34,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         mo.setCosto(modelo.getCostoTotal());
         mo.setPreciounitario(modelo.getPrecioUnitario());
         mo.setDetalle(modelo.getDetalle());
+        mo.setDescuento(modelo.getDescuento());
         this.imodeloRepository.save(mo);
     }
 

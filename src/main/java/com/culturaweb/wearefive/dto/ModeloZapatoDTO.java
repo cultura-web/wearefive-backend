@@ -19,5 +19,6 @@ public class ModeloZapatoDTO {
     private int costoTotal;
     private String material;
     private String detalle;
+    private int descuento;
 
 }
