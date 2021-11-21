@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ZapatoDTO {
-    String nombre;
-    String modelo;
+@Getter @Setter
+public class ModeloZapatoEnviadoDTO {
+
+    private String nombre;
+    private Integer precioVenta;
+    private String imagenUrl;
 }

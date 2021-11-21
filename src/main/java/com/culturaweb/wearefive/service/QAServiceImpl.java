@@ -42,8 +42,8 @@ public class QAServiceImpl implements IQAService {
     @Override
     public String agregarQA(QADTO QAdto) {
         QA qa = this.modelMapper.map(QAdto, QA.class);
-        if (qa.getPregunta().isEmpty()||qa.getRespuesta().isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "empty fields");
+        //if (qa.getPregunta().isEmpty() || qa.getRespuesta().isEmpty())
+        //    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "empty fields");
         Optional<Admin> optional = this.adminRepository.findById(1);
         Admin a = optional.get();
         qa.setAdmin(a);
@@ -54,13 +54,12 @@ public class QAServiceImpl implements IQAService {
     @Override
     public void editarQA(int Id, QADTO QAdto) {
         QA qa = this.iqaRepository.getById(Id);
-        if (!qa.equals(QAdto))
-        {
-        if (!qa.getPregunta().isEmpty())
-        qa.setPregunta(QAdto.getPregunta());
-        if (!qa.getRespuesta().isEmpty())
-        qa.setRespuesta(QAdto.getRespuesta());
-        this.iqaRepository.save(qa);
+        if (!qa.equals(QAdto)) {
+            if (!qa.getPregunta().isEmpty())
+                qa.setPregunta(QAdto.getPregunta());
+            if (!qa.getRespuesta().isEmpty())
+                qa.setRespuesta(QAdto.getRespuesta());
+            this.iqaRepository.save(qa);
         }
     }
 

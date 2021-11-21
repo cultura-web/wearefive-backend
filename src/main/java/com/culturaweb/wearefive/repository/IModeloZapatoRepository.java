@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IModeloZapatoRepository extends JpaRepository<ModeloZapato, Integer> {
+    boolean existsByNombreEquals(String nombre);
 
 }

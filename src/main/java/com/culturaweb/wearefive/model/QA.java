@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Table(name = "`q&a`")
+@Table(name = "qa")
 @Entity
 public class QA {
     @Id
@@ -25,6 +25,7 @@ public class QA {
     private String respuesta;
 
     @ManyToOne
-    @JoinColumn(name = "usuario")
+    @JoinColumn(name = "admin_id")
     private Admin admin;
+
 }

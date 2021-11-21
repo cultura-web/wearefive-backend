@@ -10,7 +10,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Table(name = "modelo_zapato")
+@Table(name = "modelo_zapato", indexes = {
+        @Index(name = "nombre_UNIQUE", columnList = "nombre", unique = true)
+})
 @Entity
 public class ModeloZapato {
     @Id
