@@ -4,6 +4,7 @@ import com.culturaweb.wearefive.dto.ErrorDTO;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
 import com.culturaweb.wearefive.exceptions.NombreDeModeloDeZapatoYaExisteException;
 import com.culturaweb.wearefive.exceptions.PrecioUnitarioException;
+import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -41,6 +42,12 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(PrecioUnitarioException.class)
     protected ResponseEntity<ErrorDTO> PrecioUnitarioException(PrecioUnitarioException e) {
         ErrorDTO error = new ErrorDTO("PrecioUnitarioException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QANoExisteException.class)
+    protected ResponseEntity<ErrorDTO> QANoExisteException(QANoExisteException e) {
+        ErrorDTO error = new ErrorDTO("QANoExisteException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

@@ -13,6 +13,13 @@ import javax.persistence.*;
 @Table(name = "qa")
 @Entity
 public class QA {
+
+    public QA(String pregunta, String respuesta, Admin admin) {
+        this.pregunta = pregunta;
+        this.respuesta = respuesta;
+        this.admin = admin;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

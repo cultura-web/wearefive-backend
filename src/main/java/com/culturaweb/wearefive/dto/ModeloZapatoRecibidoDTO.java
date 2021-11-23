@@ -17,7 +17,6 @@ public class ModeloZapatoRecibidoDTO {
     @Size(max = 45, message = "El nombre no debe superar los 45 caracteres")
     private String nombre;
 
-
     @NotEmpty(message = "La descripción del zapato no puede estar vacía")
     @Size(max = 250, message = "La descripción no debe superar los 250 caracteres")
     private String descripcion;

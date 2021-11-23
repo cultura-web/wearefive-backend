@@ -2,21 +2,21 @@ package com.culturaweb.wearefive.controller;
 
 import com.culturaweb.wearefive.dto.QADTO;
 import com.culturaweb.wearefive.dto.QAsDTO;
+import com.culturaweb.wearefive.service.IQAService;
 import com.culturaweb.wearefive.service.QAServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api")
 public class QARestController {
 
     @Autowired
-    QAServiceImpl qaService;
+    IQAService qaService;
 
     @GetMapping ("/qa")
     public ResponseEntity<QAsDTO> listarQA() {
@@ -25,13 +25,13 @@ public class QARestController {
     }
 
     @PostMapping("/qa/new")
-    public ResponseEntity<String> agregarQA(@RequestBody QADTO payload) {
+    public ResponseEntity<String> agregarQA(@Valid @RequestBody QADTO payload) {
         this.qaService.agregarQA(payload);
-        return new ResponseEntity<>("pregunta y respuesta agregadas con éxito", HttpStatus.OK);
+        return new ResponseEntity<String>("pregunta y respuesta agregada con éxito", HttpStatus.OK);
     }
 
     @PutMapping("/qa/edit/{id}")
-    public ResponseEntity<String> editarQA(@PathVariable(value = "id") int id, @RequestBody QADTO payload) {
+    public ResponseEntity<String> editarQA(@PathVariable(value = "id") int id, @Valid @RequestBody QADTO payload) {
         this.qaService.editarQA(id, payload);
         return new ResponseEntity<>("pregunta y respuesta editada con éxito", HttpStatus.OK);
 

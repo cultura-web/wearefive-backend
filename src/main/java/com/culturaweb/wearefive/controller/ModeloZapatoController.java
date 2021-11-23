@@ -1,7 +1,9 @@
 package com.culturaweb.wearefive.controller;
 
+import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
 import com.culturaweb.wearefive.dto.ModeloZapatoRecibidoDTO;
 import com.culturaweb.wearefive.dto.ModelosDTO;
+import com.culturaweb.wearefive.service.IModeloZapatoService;
 import com.culturaweb.wearefive.service.ModeloZapatoServicelpml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("api")
 public class ModeloZapatoController {
     @Autowired
-    ModeloZapatoServicelpml modeloZapatoService;
+    IModeloZapatoService modeloZapatoService;
 
     @PostMapping("/products/model")
     public ResponseEntity<String> agregarModelo(@Valid @RequestBody ModeloZapatoRecibidoDTO payload) {
@@ -23,7 +25,7 @@ public class ModeloZapatoController {
     }
 
     @PutMapping("/products/model/{id}")
-    public ResponseEntity<String> editarModelo(@PathVariable(value = "id") int id, @RequestBody ModeloZapatoRecibidoDTO payload) {
+    public ResponseEntity<String> editarModelo(@PathVariable(value = "id") int id, @Valid @RequestBody ModeloZapatoRecibidoDTO payload) {
         this.modeloZapatoService.editarModelo(id, payload);
         return new ResponseEntity<>("Editado con éxito", HttpStatus.OK);
     }
@@ -41,6 +43,10 @@ public class ModeloZapatoController {
         return new ResponseEntity<>(r,HttpStatus.OK);
     }
 
-
-
+    @GetMapping("/products/model")
+    public ResponseEntity<DetalleModeloZapatoDTO> getDetalleProducto(@RequestParam(name = "idModelo") int id)
+    {
+        DetalleModeloZapatoDTO r = this.modeloZapatoService.getDetalleModeloZapato(id);
+        return new ResponseEntity(r,HttpStatus.OK);
+    }
 }

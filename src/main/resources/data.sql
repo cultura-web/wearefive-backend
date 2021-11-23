@@ -6,3 +6,7 @@ VALUES (1, 1);
 
 INSERT INTO qa (id,pregunta,respuesta,admin_id)
 VALUES (1,'preguntax','respuestax',1);
+
+INSERT INTO modelo_zapato (id, color, costo, preciounitario, descuento, nombre, descripcion, detalle, material,
+                           imagenurl, tipo)
+VALUES (1, 'azul', 8000, 10000, 50, 'cielo', 'xxxxxxxxx', 'yyyyyy', 'tela', 'ejemplo.com', 'bota');

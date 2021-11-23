@@ -1,6 +1,7 @@
 package com.culturaweb.wearefive.unit;
 
 import com.culturaweb.wearefive.dto.QADTO;
+import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.Admin;
 import com.culturaweb.wearefive.model.QA;
 import com.culturaweb.wearefive.repository.IAdminRepository;
@@ -28,9 +29,6 @@ public class UTQAService {
     IQARepository iqaRepository;
 
     @Mock
-    ModelMapper modelMapper;
-
-    @Mock
     IAdminRepository iAdminRepository;
 
     @InjectMocks
@@ -41,24 +39,45 @@ public class UTQAService {
     {
         //arrange
         QADTO input = new QADTO("esto es una pregunta","esto es una respuesta");
-        QA r = new QA();
-        r.setPregunta("esto es una pregunta");
-        r.setRespuesta("esto es una respuesta");
-
-        Admin a = new Admin();
-        Optional<Admin> oa = Optional.of(a);
 
         String expected = "OK";
 
+        Admin a = new Admin();
 
+        when(iAdminRepository.getById(anyInt())).thenReturn(a);
         when(iqaRepository.save(any(QA.class))).thenReturn(null);
-        when(modelMapper.map(any(),any())).thenReturn(r);
-        when(iAdminRepository.findById(anyInt())).thenReturn(oa);
-
 
         //act
         String result = this.tested.agregarQA(input);
         //assert
         Assertions.assertEquals(expected,result);
+    }
+
+    @Test
+    public void testEditarQAQueNoExiste()
+    {
+        //arrange
+        QADTO input = new QADTO("esto es una pregunta","esto es una respuesta");
+        int idInput = 1;
+
+        QA consulta = null;
+        Optional o = Optional.ofNullable(consulta);
+
+        when(iqaRepository.findById(anyInt())).thenReturn(o);
+
+        //act - assert
+        Assertions.assertThrows(QANoExisteException.class, () -> this.tested.editarQA(idInput,input));
+    }
+
+    @Test
+    public void testEliminarQAQueNoExiste()
+    {
+        //arrange
+        int idInput = 1;
+
+        when(iqaRepository.existsById(anyInt())).thenReturn(false);
+
+        //act - assert
+        Assertions.assertThrows(QANoExisteException.class, () -> this.tested.eliminarQA(idInput));
     }
 }

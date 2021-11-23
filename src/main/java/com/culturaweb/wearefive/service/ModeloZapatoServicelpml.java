@@ -1,5 +1,6 @@
 package com.culturaweb.wearefive.service;
 
+import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
 import com.culturaweb.wearefive.dto.ModeloZapatoEnviadoDTO;
 import com.culturaweb.wearefive.dto.ModeloZapatoRecibidoDTO;
 import com.culturaweb.wearefive.dto.ModelosDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ModeloZapatoServicelpml implements  IModeloZapatoService{
@@ -21,6 +23,11 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
     IModeloZapatoRepository imodeloRepository;
     @Autowired
     ModelMapper modelMapper;
+
+    public ModeloZapatoServicelpml(IModeloZapatoRepository imodeloRepository, ModelMapper modelMapper) {
+        this.imodeloRepository = imodeloRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public void agregarModelo(ModeloZapatoRecibidoDTO modelo) {
@@ -64,7 +71,18 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         List<ModeloZapato> zapatoList = this.imodeloRepository.findAll();
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m:zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getNombre(),m.getPreciounitario(),m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
         return new ModelosDTO(zapatosEnviados);
+    }
+
+    @Override
+    public DetalleModeloZapatoDTO getDetalleModeloZapato(int id) {
+        Optional<ModeloZapato> optional = this.imodeloRepository.findById(id);
+        if(optional.isEmpty())
+            throw new ModeloDeZapatoNoExisteException();
+        ModeloZapato modeloZapato = optional.get();
+        DetalleModeloZapatoDTO detalleModeloZapatoDTO = this.modelMapper.map(modeloZapato,DetalleModeloZapatoDTO.class);
+        detalleModeloZapatoDTO.setPrecioVenta((modeloZapato.getPreciounitario()*(100-modeloZapato.getDescuento()))/100);
+        return detalleModeloZapatoDTO;
     }
 }
