@@ -9,5 +9,4 @@ import java.util.List;
 @NoArgsConstructor
 public class ModelosDTO {
     private List<ModeloZapatoEnviadoDTO> modeloZapatos;
-
 }

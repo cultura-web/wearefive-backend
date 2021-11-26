@@ -49,4 +49,11 @@ public class ModeloZapatoController {
         DetalleModeloZapatoDTO r = this.modeloZapatoService.getDetalleModeloZapato(id);
         return new ResponseEntity(r,HttpStatus.OK);
     }
+
+    @GetMapping("/products/model/{nombre}")
+    public ResponseEntity<ModelosDTO> buscarModelosZapatos(@PathVariable(value = "nombre") String nombre)
+    {
+        ModelosDTO r = this.modeloZapatoService.buscarZapatosPorNombre(nombre);
+        return new ResponseEntity<>(r,HttpStatus.OK);
+    }
 }

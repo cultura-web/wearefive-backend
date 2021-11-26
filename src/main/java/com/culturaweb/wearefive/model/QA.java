@@ -20,6 +20,11 @@ public class QA {
         this.admin = admin;
     }
 
+    public QA(String pregunta, String respuesta) {
+        this.pregunta = pregunta;
+        this.respuesta = respuesta;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

@@ -85,4 +85,13 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         detalleModeloZapatoDTO.setPrecioVenta((modeloZapato.getPreciounitario()*(100-modeloZapato.getDescuento()))/100);
         return detalleModeloZapatoDTO;
     }
+
+    @Override
+    public ModelosDTO buscarZapatosPorNombre(String nombre) {
+        List<ModeloZapato> zapatoList = this.imodeloRepository.findByNombreContains(nombre);
+        List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
+        for (ModeloZapato m:zapatoList)
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
+        return new ModelosDTO(zapatosEnviados);
+    }
 }

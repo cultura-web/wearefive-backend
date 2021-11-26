@@ -14,4 +14,6 @@ public interface IModeloZapatoService {
     public ModelosDTO listarModelos();
 
     public DetalleModeloZapatoDTO getDetalleModeloZapato(int id);
+
+    public ModelosDTO buscarZapatosPorNombre(String nombre);
 }

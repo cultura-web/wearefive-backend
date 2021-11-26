@@ -1,6 +1,7 @@
 package com.culturaweb.wearefive.unit;
 
 import com.culturaweb.wearefive.dto.QADTO;
+import com.culturaweb.wearefive.dto.QAsDTO;
 import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.Admin;
 import com.culturaweb.wearefive.model.QA;
@@ -15,15 +16,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UTQAService {
+public class QAServiceUT {
 
     @Mock
     IQARepository iqaRepository;
@@ -79,5 +83,25 @@ public class UTQAService {
 
         //act - assert
         Assertions.assertThrows(QANoExisteException.class, () -> this.tested.eliminarQA(idInput));
+    }
+
+    @Test
+    public void testListarQAs()
+    {
+        //arrange
+        List<QADTO> list = new ArrayList<>();
+        list.add(new QADTO("pregunta 1","respuesta 1"));
+        list.add(new QADTO("pregunta 2","respuesta 2"));
+        QAsDTO expected = new QAsDTO(list);
+
+        List<QA> mocked = new ArrayList<>();
+        mocked.add(new QA("pregunta 1","respuesta 1"));
+        mocked.add(new QA("pregunta 2","respuesta 2"));
+
+        when(this.iqaRepository.findAll()).thenReturn(mocked);
+        //act
+        QAsDTO result = this.tested.listarQA();
+        //assert
+        Assertions.assertEquals(expected,result);
     }
 }

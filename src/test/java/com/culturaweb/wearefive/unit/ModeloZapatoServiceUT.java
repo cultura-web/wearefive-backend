@@ -1,11 +1,10 @@
 package com.culturaweb.wearefive.unit;
 
-import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
-import com.culturaweb.wearefive.dto.ModeloZapatoEnviadoDTO;
-import com.culturaweb.wearefive.dto.ModelosDTO;
+import com.culturaweb.wearefive.dto.*;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
 import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.ModeloZapato;
+import com.culturaweb.wearefive.model.QA;
 import com.culturaweb.wearefive.repository.IModeloZapatoRepository;
 import com.culturaweb.wearefive.service.ModeloZapatoServicelpml;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +24,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UTModeloZapatoService {
+public class ModeloZapatoServiceUT {
 
     @InjectMocks
     ModelMapper modelMapper;
@@ -37,7 +36,7 @@ public class UTModeloZapatoService {
     IModeloZapatoRepository modeloZapatoRepository;
 
     @Test
-    public void listarModelosZapatos()
+    public void testListarModelosZapatos()
     {
         //arrange
         List<ModeloZapato> zapatoList = new ArrayList<>();
@@ -59,7 +58,7 @@ public class UTModeloZapatoService {
     }
 
     @Test
-    public void detallarModeloZapato()
+    public void testDetallarModeloZapato()
     {
         //arrange
         ModeloZapatoServicelpml t = new ModeloZapatoServicelpml(this.modeloZapatoRepository,new ModelMapper());
@@ -93,11 +92,35 @@ public class UTModeloZapatoService {
     }
 
     @Test
-    public void detallarModeloZapatoConIdQueNoExiste()
+    public void testDetallarModeloZapatoConIdQueNoExiste()
     {
         //arrange
         when(this.modeloZapatoRepository.findById(anyInt())).thenReturn(Optional.ofNullable(null));
         //act - assert
         Assertions.assertThrows(ModeloDeZapatoNoExisteException.class, () -> this.tested.getDetalleModeloZapato(2));
+    }
+
+    @Test
+    public void testBuscarModelosPorNombre()
+    {
+        //arrange
+        List<ModeloZapatoEnviadoDTO> list = new ArrayList<>();
+        list.add(new ModeloZapatoEnviadoDTO("hielo",9000,"ejemplo.com"));
+        list.add(new ModeloZapatoEnviadoDTO("cielo",8000,"ejemplo.com"));
+
+        ModelosDTO expected = new ModelosDTO(list);
+
+        List<ModeloZapato> mocked = new ArrayList();
+        ModeloZapato m1 = new ModeloZapato(10000,10,"hielo","ejemplo.com");
+        ModeloZapato m2 = new ModeloZapato(10000,20,"cielo","ejemplo.com");
+        mocked.add(m1);
+        mocked.add(m2);
+
+        when(this.modeloZapatoRepository.findByNombreContains(anyString())).thenReturn(mocked);
+        //act
+        ModelosDTO result = this.tested.buscarZapatosPorNombre("elo");
+        //assert
+        Assertions.assertEquals(expected,result);
+
     }
 }
