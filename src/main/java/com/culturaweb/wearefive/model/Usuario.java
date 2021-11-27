@@ -39,7 +39,14 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario")
     private Admin admin;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Cliente cliente;
 
+    public Usuario(String nombres, String apellidos, String username, String contrasena, String correo) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.username = username;
+        this.contrasena = contrasena;
+        this.correo = correo;
+    }
 }

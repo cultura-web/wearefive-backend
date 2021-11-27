@@ -1,6 +1,6 @@
 INSERT INTO usuario (id,nombres,apellidos,username,contrasena,correo)
 VALUES (1,'nombrex','apellidox','admin','admin','example@correo.com'),
-       (2,'cliente1','apellidoCliente1','cliente1','1234','example2@correo.com');
+       (2,'cliente1','apellidoCliente1','cliente1','12345678','example2@correo.com');
 
 INSERT INTO cliente (id, direccion, celular, usuario_id)
 VALUES (1, 'direccion1', '3224387110', 2);

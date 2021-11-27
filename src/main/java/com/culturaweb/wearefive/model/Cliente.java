@@ -29,4 +29,9 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    public Cliente(String direccion, String celular, Usuario usuario) {
+        this.direccion = direccion;
+        this.celular = celular;
+        this.usuario = usuario;
+    }
 }

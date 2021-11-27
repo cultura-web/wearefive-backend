@@ -1,10 +1,7 @@
 package com.culturaweb.wearefive.controller;
 
 import com.culturaweb.wearefive.dto.ErrorDTO;
-import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
-import com.culturaweb.wearefive.exceptions.NombreDeModeloDeZapatoYaExisteException;
-import com.culturaweb.wearefive.exceptions.PrecioUnitarioException;
-import com.culturaweb.wearefive.exceptions.QANoExisteException;
+import com.culturaweb.wearefive.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -54,7 +51,19 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     protected ResponseEntity<ErrorDTO> credencialesIncorrectas(BadCredentialsException e) {
-        ErrorDTO error = new ErrorDTO("BadCredentialsException", e.getMessage());
+        ErrorDTO error = new ErrorDTO("CredencialesIncorrectasException", e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsuarioYaExisteException.class)
+    protected ResponseEntity<ErrorDTO> usernameYaExiste(UsuarioYaExisteException e) {
+        ErrorDTO error = new ErrorDTO("UsuarioYaExisteException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CorreoYaExisteException.class)
+    protected ResponseEntity<ErrorDTO> correoYaExiste(CorreoYaExisteException e) {
+        ErrorDTO error = new ErrorDTO("CorreoYaExisteException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
