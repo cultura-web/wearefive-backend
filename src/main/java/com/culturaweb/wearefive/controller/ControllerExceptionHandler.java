@@ -8,6 +8,7 @@ import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,6 +49,12 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(QANoExisteException.class)
     protected ResponseEntity<ErrorDTO> QANoExisteException(QANoExisteException e) {
         ErrorDTO error = new ErrorDTO("QANoExisteException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    protected ResponseEntity<ErrorDTO> credencialesIncorrectas(BadCredentialsException e) {
+        ErrorDTO error = new ErrorDTO("BadCredentialsException", e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

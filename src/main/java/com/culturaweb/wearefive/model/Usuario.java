@@ -35,4 +35,11 @@ public class Usuario {
 
     @Column(name = "correo", length = 45)
     private String correo;
+
+    @OneToOne(mappedBy = "usuario")
+    private Admin admin;
+
+    @OneToOne(mappedBy = "usuario")
+    private Cliente cliente;
+
 }

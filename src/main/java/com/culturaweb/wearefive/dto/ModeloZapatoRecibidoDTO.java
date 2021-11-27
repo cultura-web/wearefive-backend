@@ -10,7 +10,6 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-
 public class ModeloZapatoRecibidoDTO {
 
     @NotEmpty(message = "El nombre del zapato no puede estar vacío")

@@ -7,6 +7,7 @@ import com.culturaweb.wearefive.service.QAServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,12 +26,14 @@ public class QARestController {
     }
 
     @PostMapping("/qa/new")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<String> agregarQA(@Valid @RequestBody QADTO payload) {
         this.qaService.agregarQA(payload);
-        return new ResponseEntity<String>("pregunta y respuesta agregada con éxito", HttpStatus.OK);
+        return new ResponseEntity<>("pregunta y respuesta agregada con éxito", HttpStatus.OK);
     }
 
     @PutMapping("/qa/edit/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<String> editarQA(@PathVariable(value = "id") int id, @Valid @RequestBody QADTO payload) {
         this.qaService.editarQA(id, payload);
         return new ResponseEntity<>("pregunta y respuesta editada con éxito", HttpStatus.OK);
@@ -38,6 +41,7 @@ public class QARestController {
     }
 
     @DeleteMapping("/qa/delete/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<String> eliminarQA(@PathVariable(value = "id") int id) {
         this.qaService.eliminarQA(id);
         return new ResponseEntity<>("pregunta y respuesta eliminada con éxito", HttpStatus.OK);
