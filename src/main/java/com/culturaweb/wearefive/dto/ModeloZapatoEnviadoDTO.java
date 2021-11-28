@@ -7,6 +7,7 @@ import lombok.*;
 @Data
 public class ModeloZapatoEnviadoDTO {
 
+    private Integer id;
     private String nombre;
     private Integer precioVenta;
     private String imagenUrl;

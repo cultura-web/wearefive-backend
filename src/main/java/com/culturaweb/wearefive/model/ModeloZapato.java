@@ -50,7 +50,8 @@ public class ModeloZapato {
     @Column(name = "tipo", length = 45)
     private String tipo;
 
-    public ModeloZapato(Integer preciounitario, Integer descuento, String nombre, String imagenurl) {
+    public ModeloZapato(Integer id,Integer preciounitario, Integer descuento, String nombre, String imagenurl) {
+        this.id = id;
         this.preciounitario = preciounitario;
         this.descuento = descuento;
         this.nombre = nombre;

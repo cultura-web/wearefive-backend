@@ -40,14 +40,14 @@ public class ModeloZapatoServiceUT {
     {
         //arrange
         List<ModeloZapato> zapatoList = new ArrayList<>();
-        zapatoList.add(new ModeloZapato(10000,20,"chocolate","prueba.com"));
-        zapatoList.add(new ModeloZapato(10000,70,"oro","prueba.com"));
-        zapatoList.add(new ModeloZapato(10000,50,"diamante","prueba.com"));
+        zapatoList.add(new ModeloZapato(1,10000,20,"chocolate","prueba.com"));
+        zapatoList.add(new ModeloZapato(2,10000,70,"oro","prueba.com"));
+        zapatoList.add(new ModeloZapato(3,10000,50,"diamante","prueba.com"));
 
         List<ModeloZapatoEnviadoDTO> modeloZapatos = new ArrayList<>();
-        modeloZapatos.add(new ModeloZapatoEnviadoDTO("chocolate", 8000,"prueba.com"));
-        modeloZapatos.add(new ModeloZapatoEnviadoDTO("oro", 3000,"prueba.com"));
-        modeloZapatos.add(new ModeloZapatoEnviadoDTO("diamante", 5000,"prueba.com"));
+        modeloZapatos.add(new ModeloZapatoEnviadoDTO(1,"chocolate", 8000,"prueba.com"));
+        modeloZapatos.add(new ModeloZapatoEnviadoDTO(2,"oro", 3000,"prueba.com"));
+        modeloZapatos.add(new ModeloZapatoEnviadoDTO(3,"diamante", 5000,"prueba.com"));
         ModelosDTO expected = new ModelosDTO(modeloZapatos);
 
         when(modeloZapatoRepository.findAll()).thenReturn(zapatoList);
@@ -105,14 +105,14 @@ public class ModeloZapatoServiceUT {
     {
         //arrange
         List<ModeloZapatoEnviadoDTO> list = new ArrayList<>();
-        list.add(new ModeloZapatoEnviadoDTO("hielo",9000,"ejemplo.com"));
-        list.add(new ModeloZapatoEnviadoDTO("cielo",8000,"ejemplo.com"));
+        list.add(new ModeloZapatoEnviadoDTO(1,"hielo",9000,"ejemplo.com"));
+        list.add(new ModeloZapatoEnviadoDTO(2,"cielo",8000,"ejemplo.com"));
 
         ModelosDTO expected = new ModelosDTO(list);
 
         List<ModeloZapato> mocked = new ArrayList();
-        ModeloZapato m1 = new ModeloZapato(10000,10,"hielo","ejemplo.com");
-        ModeloZapato m2 = new ModeloZapato(10000,20,"cielo","ejemplo.com");
+        ModeloZapato m1 = new ModeloZapato(1,10000,10,"hielo","ejemplo.com");
+        ModeloZapato m2 = new ModeloZapato(2,10000,20,"cielo","ejemplo.com");
         mocked.add(m1);
         mocked.add(m2);
 

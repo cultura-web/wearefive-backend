@@ -71,7 +71,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         List<ModeloZapato> zapatoList = this.imodeloRepository.findAll();
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m:zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
         return new ModelosDTO(zapatosEnviados);
     }
 
@@ -91,7 +91,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         List<ModeloZapato> zapatoList = this.imodeloRepository.findByNombreContains(nombre);
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m:zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
         return new ModelosDTO(zapatosEnviados);
     }
 }
