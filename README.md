@@ -1,6 +1,6 @@
 # WE ARE FIVE BACKEND
 
-Repositorio dedicado a la sección frontend del proyecto We ARE FIVE.
+Repositorio dedicado a la sección backend del proyecto We ARE FIVE.
 
 
 
