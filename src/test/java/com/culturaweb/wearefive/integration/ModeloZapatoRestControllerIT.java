@@ -33,13 +33,13 @@ public class ModeloZapatoRestControllerIT {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.nombre").value("cielo"))
+                .andExpect(jsonPath("$.nombre").value("ITADORI"))
                 .andExpect(jsonPath("$.precioVenta").value(5000))
                 .andExpect(jsonPath("$.imagenUrl").value("ejemplo.com"))
-                .andExpect(jsonPath("$.descripcion").value("xxxxxxxxx"))
-                .andExpect(jsonPath("$.color").value("azul"))
+                .andExpect(jsonPath("$.descripcion").value("Economico y artesanal, proporciona a tus pies la sensación de caminar en el cielo"))
+                .andExpect(jsonPath("$.color").value("negro"))
                 .andExpect(jsonPath("$.tipo").value("bota"))
-                .andExpect(jsonPath("$.material").value("tela"));
+                .andExpect(jsonPath("$.material").value("cuero"));
     }
 
     @Test

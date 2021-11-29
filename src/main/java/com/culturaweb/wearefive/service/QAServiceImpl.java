@@ -38,7 +38,7 @@ public class QAServiceImpl implements IQAService {
     @Override
     public String agregarQA(QADTO qadto) {
         Admin a = this.adminRepository.getById(1);
-        this.iqaRepository.save(new QA(qadto.getPregunta(),qadto.getPregunta(),a));
+        this.iqaRepository.save(new QA(qadto.getPregunta(),qadto.getRespuesta(),a));
         return "OK";
     }
 
