@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class ModeloZapato {
     private Integer costo;
 
     @Column(name = "preciounitario")
-    private Integer preciounitario;
+    private Integer precioUnitario;
 
     @Column(name = "descuento")
     private Integer descuento;
@@ -50,9 +51,12 @@ public class ModeloZapato {
     @Column(name = "tipo", length = 45)
     private String tipo;
 
-    public ModeloZapato(Integer id,Integer preciounitario, Integer descuento, String nombre, String imagenurl) {
+    @OneToMany(mappedBy = "modeloZapato")
+    private List<Proceso> procesos;
+
+    public ModeloZapato(Integer id, Integer precioUnitario, Integer descuento, String nombre, String imagenurl) {
         this.id = id;
-        this.preciounitario = preciounitario;
+        this.precioUnitario = precioUnitario;
         this.descuento = descuento;
         this.nombre = nombre;
         this.imagenurl = imagenurl;

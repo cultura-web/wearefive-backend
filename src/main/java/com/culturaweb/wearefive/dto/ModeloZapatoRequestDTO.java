@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class ModeloZapatoRecibidoDTO {
+public class ModeloZapatoRequestDTO {
 
     @NotEmpty(message = "El nombre del zapato no puede estar vacío")
     @Size(max = 45, message = "El nombre no debe superar los 45 caracteres")

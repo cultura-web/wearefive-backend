@@ -2,7 +2,7 @@ package com.culturaweb.wearefive.service;
 
 import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
 import com.culturaweb.wearefive.dto.ModeloZapatoEnviadoDTO;
-import com.culturaweb.wearefive.dto.ModeloZapatoRecibidoDTO;
+import com.culturaweb.wearefive.dto.ModeloZapatoRequestDTO;
 import com.culturaweb.wearefive.dto.ModelosDTO;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
 import com.culturaweb.wearefive.exceptions.NombreDeModeloDeZapatoYaExisteException;
@@ -30,7 +30,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
     }
 
     @Override
-    public void agregarModelo(ModeloZapatoRecibidoDTO modelo) {
+    public void agregarModelo(ModeloZapatoRequestDTO modelo) {
         if(this.imodeloRepository.existsByNombreEquals(modelo.getNombre()))
             throw new NombreDeModeloDeZapatoYaExisteException();
         if(modelo.getCostoTotal() > modelo.getPrecioUnitario())
@@ -40,7 +40,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
     }
 
     @Override
-    public void editarModelo(int id, ModeloZapatoRecibidoDTO modelo) {
+    public void editarModelo(int id, ModeloZapatoRequestDTO modelo) {
 
         if(!this.imodeloRepository.existsById(id))
             throw new ModeloDeZapatoNoExisteException();
@@ -71,7 +71,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         List<ModeloZapato> zapatoList = this.imodeloRepository.findAll();
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m:zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPrecioUnitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
         return new ModelosDTO(zapatosEnviados);
     }
 
@@ -82,7 +82,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
             throw new ModeloDeZapatoNoExisteException();
         ModeloZapato modeloZapato = optional.get();
         DetalleModeloZapatoDTO detalleModeloZapatoDTO = this.modelMapper.map(modeloZapato,DetalleModeloZapatoDTO.class);
-        detalleModeloZapatoDTO.setPrecioVenta((modeloZapato.getPreciounitario()*(100-modeloZapato.getDescuento()))/100);
+        detalleModeloZapatoDTO.setPrecioVenta((modeloZapato.getPrecioUnitario()*(100-modeloZapato.getDescuento()))/100);
         return detalleModeloZapatoDTO;
     }
 
@@ -91,7 +91,7 @@ public class ModeloZapatoServicelpml implements  IModeloZapatoService{
         List<ModeloZapato> zapatoList = this.imodeloRepository.findByNombreContains(nombre);
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m:zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPreciounitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(),m.getNombre(),(m.getPrecioUnitario()*(100-m.getDescuento()))/100,m.getImagenurl()));
         return new ModelosDTO(zapatosEnviados);
     }
 }

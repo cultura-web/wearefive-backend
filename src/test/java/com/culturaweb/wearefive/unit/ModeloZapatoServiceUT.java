@@ -73,7 +73,8 @@ public class ModeloZapatoServiceUT {
                 "tener cuidado con el armado...",
                 "algodon",
                 "prueba.com",
-                "bota");
+                "bota",
+                null);
         Optional<ModeloZapato> optional = Optional.of(m);
         when(this.modeloZapatoRepository.findById(anyInt())).thenReturn(optional);
 

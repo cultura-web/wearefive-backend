@@ -1,10 +1,9 @@
 package com.culturaweb.wearefive.controller;
 
 import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
-import com.culturaweb.wearefive.dto.ModeloZapatoRecibidoDTO;
+import com.culturaweb.wearefive.dto.ModeloZapatoRequestDTO;
 import com.culturaweb.wearefive.dto.ModelosDTO;
 import com.culturaweb.wearefive.service.IModeloZapatoService;
-import com.culturaweb.wearefive.service.ModeloZapatoServicelpml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +20,14 @@ public class ModeloZapatoController {
 
     @PostMapping("/products/model")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<String> agregarModelo(@Valid @RequestBody ModeloZapatoRecibidoDTO payload) {
+    public ResponseEntity<String> agregarModelo(@Valid @RequestBody ModeloZapatoRequestDTO payload) {
         this.modeloZapatoService.agregarModelo(payload);
         return new ResponseEntity<>("modelo agregado con éxito", HttpStatus.OK);
     }
 
     @PutMapping("/products/model/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<String> editarModelo(@PathVariable(value = "id") int id, @Valid @RequestBody ModeloZapatoRecibidoDTO payload) {
+    public ResponseEntity<String> editarModelo(@PathVariable(value = "id") int id, @Valid @RequestBody ModeloZapatoRequestDTO payload) {
         this.modeloZapatoService.editarModelo(id, payload);
         return new ResponseEntity<>("Editado con éxito", HttpStatus.OK);
     }
