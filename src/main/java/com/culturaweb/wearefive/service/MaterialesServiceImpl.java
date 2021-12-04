@@ -1,11 +1,15 @@
 package com.culturaweb.wearefive.service;
 
 import com.culturaweb.wearefive.dto.MaterialRequestDTO;
+import com.culturaweb.wearefive.dto.MaterialResponseDTO;
+import com.culturaweb.wearefive.dto.MaterialesDTO;
 import com.culturaweb.wearefive.exceptions.MaterialNoEncontradoException;
 import com.culturaweb.wearefive.model.Material;
 import com.culturaweb.wearefive.repository.IMaterialRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +48,14 @@ public class MaterialesServiceImpl implements IMaterialesService{
             throw new MaterialNoEncontradoException();
         this.materialRepository.deleteById(id);
         return "OK";
+    }
+
+    @Override
+    public MaterialesDTO listarMateriales() {
+        List<Material> modelos = this.materialRepository.findAll();
+        List<MaterialResponseDTO> materiales = new ArrayList<>();
+        for(Material m:modelos)
+            materiales.add(new MaterialResponseDTO(m.getId(),m.getNombre(),m.getPrecioUnitario()));
+        return new MaterialesDTO(materiales);
     }
 }

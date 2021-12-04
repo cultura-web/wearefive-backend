@@ -20,7 +20,8 @@ public class QA {
         this.admin = admin;
     }
 
-    public QA(String pregunta, String respuesta) {
+    public QA(int id, String pregunta, String respuesta) {
+        this.id = id;
         this.pregunta = pregunta;
         this.respuesta = respuesta;
     }

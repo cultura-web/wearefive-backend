@@ -29,4 +29,9 @@ public class MaterialDeProceso {
     @JoinColumn(name = "proceso_id")
     private Proceso proceso;
 
+    public MaterialDeProceso(int cantidad, Material material, Proceso proceso) {
+        this.cantidad = cantidad;
+        this.material = material;
+        this.proceso = proceso;
+    }
 }

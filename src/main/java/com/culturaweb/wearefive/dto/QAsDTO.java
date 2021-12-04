@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class QAsDTO {
-    private List<QADTO> qas;
+    private List<QAResponseDTO> qas;
 }

@@ -1,6 +1,7 @@
 package com.culturaweb.wearefive.controller;
 
 import com.culturaweb.wearefive.dto.MaterialRequestDTO;
+import com.culturaweb.wearefive.dto.MaterialesDTO;
 import com.culturaweb.wearefive.service.IMaterialesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,12 @@ public class MaterialesController {
     public ResponseEntity<String> eliminarMaterial(@PathVariable(value = "id") int id) {
         this.materialesService.eliminarMaterial(id);
         return new ResponseEntity<>("Material eliminado!",HttpStatus.OK);
+    }
+
+    @GetMapping("/materiales/list")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<MaterialesDTO> listarMateriales(){
+        MaterialesDTO r = this.materialesService.listarMateriales();
+        return new ResponseEntity<>(r,HttpStatus.OK);
     }
 }

@@ -17,3 +17,7 @@ VALUES (1, 'negro', 8000, 10000, 50, 'ITADORI', 'Economico y artesanal, proporci
        (2, 'azul', 15000, 20000, 0, 'THE ZIPPER', 'Minimalista en su diseño, con una cremallera atravezando la capellada', 'hecho con una cremayera entre las costuras del zapato', 'Cuero', 'ejemplo.com', 'tenis'),
        (3, 'azul', 8000, 10000, 50, 'CRANE DEUX', 'Un diseño fuera de onda, ideal para cualquier rockstar', 'hecho a medida con bordes resistentes', 'Cuero', 'ejemplo.com', 'bota'),
        (4, 'negro', 8000, 10000, 50, 'ICARO', 'diseño clasico de toda la vida con agarre perfecto para mayor durabilidad', 'costuras derechas, sin hilos sueltos ni pliegues indeseables.', 'cuero', 'ejemplo.com', 'bota');
+
+INSERT INTO material (id, nombre, detalle, precio_unitario, unidad)
+VALUES (1, 'suela de poliester', 'suelas especiales para zapato tipo tenis', 1000, 'unidad'),
+       (2, 'cordones de algodon', 'cordones hechos en algodon', 500, 'par');

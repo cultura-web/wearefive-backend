@@ -1,6 +1,7 @@
 package com.culturaweb.wearefive.service;
 
 import com.culturaweb.wearefive.dto.QADTO;
+import com.culturaweb.wearefive.dto.QAResponseDTO;
 import com.culturaweb.wearefive.dto.QAsDTO;
 import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.Admin;
@@ -29,9 +30,9 @@ public class QAServiceImpl implements IQAService {
     @Override
     public QAsDTO listarQA() {
         List<QA> qa = this.iqaRepository.findAll();
-        List<QADTO> qadto = new ArrayList<>();
+        List<QAResponseDTO> qadto = new ArrayList<>();
         for (QA Q : qa)
-            qadto.add(new QADTO(Q.getPregunta(),Q.getRespuesta()));
+            qadto.add(new QAResponseDTO(Q.getId(),Q.getPregunta(),Q.getRespuesta()));
         return new QAsDTO(qadto);
     }
 

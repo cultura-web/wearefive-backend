@@ -34,5 +34,4 @@ public class Proceso {
 
     @OneToMany(mappedBy = "proceso")
     private List<MaterialDeProceso> materialDeProcesos;
-
 }
