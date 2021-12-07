@@ -1,6 +1,7 @@
 package com.culturaweb.wearefive.unit;
 
 import com.culturaweb.wearefive.dto.QADTO;
+import com.culturaweb.wearefive.dto.QAResponseDTO;
 import com.culturaweb.wearefive.dto.QAsDTO;
 import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.Admin;
@@ -89,14 +90,14 @@ public class QAServiceUT {
     public void testListarQAs()
     {
         //arrange
-        List<QADTO> list = new ArrayList<>();
-        list.add(new QADTO("pregunta 1","respuesta 1"));
-        list.add(new QADTO("pregunta 2","respuesta 2"));
+        List<QAResponseDTO> list = new ArrayList<>();
+        list.add(new QAResponseDTO(1,"pregunta 1","respuesta 1"));
+        list.add(new QAResponseDTO(2,"pregunta 2","respuesta 2"));
         QAsDTO expected = new QAsDTO(list);
 
         List<QA> mocked = new ArrayList<>();
-        mocked.add(new QA("pregunta 1","respuesta 1"));
-        mocked.add(new QA("pregunta 2","respuesta 2"));
+        mocked.add(new QA(1,"pregunta 1","respuesta 1"));
+        mocked.add(new QA(2,"pregunta 2","respuesta 2"));
 
         when(this.iqaRepository.findAll()).thenReturn(mocked);
         //act

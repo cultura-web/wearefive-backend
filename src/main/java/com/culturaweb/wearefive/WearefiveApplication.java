@@ -12,10 +12,5 @@ public class WearefiveApplication {
 		SpringApplication.run(WearefiveApplication.class, args);
 	}
 
-	@Bean
-	ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
 }
 

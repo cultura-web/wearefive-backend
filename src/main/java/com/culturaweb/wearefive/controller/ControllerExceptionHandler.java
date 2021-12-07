@@ -66,4 +66,10 @@ public class ControllerExceptionHandler {
         ErrorDTO error = new ErrorDTO("CorreoYaExisteException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MaterialNoEncontradoException.class)
+    protected ResponseEntity<ErrorDTO> materialNoEncontrado(MaterialNoEncontradoException e) {
+        ErrorDTO error = new ErrorDTO("MaterialNoEncontradoException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
