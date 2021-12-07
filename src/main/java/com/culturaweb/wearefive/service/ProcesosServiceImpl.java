@@ -25,11 +25,13 @@ public class ProcesosServiceImpl implements IProcesosService{
     private final IProcesoRepository procesoRepository;
     private final IModeloZapatoRepository modeloZapatoRepository;
     private final IMaterialRepository materialRepository;
+    private final IMaterialDeProcesoRepository materialDeProcesoRepository;
 
-    public ProcesosServiceImpl(IProcesoRepository procesoRepository, IModeloZapatoRepository modeloZapatoRepository, IMaterialRepository materialRepository) {
+    public ProcesosServiceImpl(IProcesoRepository procesoRepository, IModeloZapatoRepository modeloZapatoRepository, IMaterialRepository materialRepository, IMaterialDeProcesoRepository materialDeProcesoRepository) {
         this.procesoRepository = procesoRepository;
         this.modeloZapatoRepository = modeloZapatoRepository;
         this.materialRepository = materialRepository;
+        this.materialDeProcesoRepository = materialDeProcesoRepository;
     }
 
     @Override
@@ -39,16 +41,17 @@ public class ProcesosServiceImpl implements IProcesosService{
             throw new ModeloDeZapatoNoExisteException();
         ModeloZapato m = optional.get();
 
-        Proceso p = new Proceso();//TODO
         List<Material> materiales = getMateriales(procesoDTO.getMateriales());
+        Proceso p =mapearProceso(m,procesoDTO.getNombre(),procesoDTO.getDetalle(),materiales,procesoDTO.getMateriales());
 
         Iterator<MaterialEnProcesoDTO> iterator = procesoDTO.getMateriales().iterator();
         for(Material material:materiales){
             MaterialDeProceso materialDeProceso = new MaterialDeProceso(iterator.next().getCantidad(),material,p);
-            p.getMaterialDeProcesos().add(materialDeProceso);
+            this.materialDeProcesoRepository.save(materialDeProceso);
         }
-        this.procesoRepository.save(p);
-        return null;
+        m.setCosto(m.getCosto()+p.getCostoTotal());
+        this.modeloZapatoRepository.save(m);
+        return "OK";
     }
 
     private List<Material> getMateriales(List<MaterialEnProcesoDTO> mat){
@@ -60,5 +63,19 @@ public class ProcesosServiceImpl implements IProcesosService{
             materiales.add(optionalMaterial.get());
         }
         return materiales;
+    }
+
+    private Proceso mapearProceso(ModeloZapato m, String nombre, String detalle, List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTO){
+        int costoTotal = calcularCostoTotal(materiales,materialEnProcesoDTO);
+        return new Proceso(nombre,detalle,costoTotal,m);
+    }
+
+    private int calcularCostoTotal(List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTOS){
+        Iterator<MaterialEnProcesoDTO> iterator = materialEnProcesoDTOS.iterator();
+        int r = 0;
+        for(Material m:materiales){
+            r += m.getPrecioUnitario()*iterator.next().getCantidad();
+        }
+        return r;
     }
 }

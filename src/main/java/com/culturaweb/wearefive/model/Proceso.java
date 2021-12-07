@@ -28,10 +28,17 @@ public class Proceso {
     @Column(name = "costo_total")
     private int costoTotal;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "modelo_zapato_id")
     private ModeloZapato modeloZapato;
 
     @OneToMany(mappedBy = "proceso")
     private List<MaterialDeProceso> materialDeProcesos;
+
+    public Proceso(String nombre, String detalle, int costoTotal, ModeloZapato modeloZapato) {
+        this.nombre = nombre;
+        this.detalle = detalle;
+        this.costoTotal = costoTotal;
+        this.modeloZapato = modeloZapato;
+    }
 }

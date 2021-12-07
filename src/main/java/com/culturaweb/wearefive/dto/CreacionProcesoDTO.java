@@ -20,6 +20,6 @@ public class CreacionProcesoDTO {
     @NotEmpty(message = "El detalle del proceso no puede quedar vacío")
     private String detalle;
 
-    @NotNull
+    @NotNull(message = "no puede registrarse un proceso sin materiales")
     List<@Valid MaterialEnProcesoDTO> materiales;
 }

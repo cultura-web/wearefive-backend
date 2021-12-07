@@ -21,11 +21,11 @@ public class MaterialDeProceso {
     @Column(name = "cantidad")
     private int cantidad;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "material_id")
     private Material material;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "proceso_id")
     private Proceso proceso;
 
