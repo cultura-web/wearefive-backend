@@ -6,6 +6,7 @@ import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.ModeloZapato;
 import com.culturaweb.wearefive.model.QA;
 import com.culturaweb.wearefive.repository.IModeloZapatoRepository;
+import com.culturaweb.wearefive.repository.IProcesoRepository;
 import com.culturaweb.wearefive.service.ModeloZapatoServicelpml;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,16 @@ import static org.mockito.Mockito.when;
 public class ModeloZapatoServiceUT {
 
     @InjectMocks
-    ModelMapper modelMapper;
-
-    @InjectMocks
     ModeloZapatoServicelpml tested;
 
     @Mock
     IModeloZapatoRepository modeloZapatoRepository;
+
+    @Mock
+    ModelMapper modelMapper;
+
+    @Mock
+    IProcesoRepository procesoRepository;
 
     @Test
     public void testListarModelosZapatos()
@@ -61,7 +65,7 @@ public class ModeloZapatoServiceUT {
     public void testDetallarModeloZapato()
     {
         //arrange
-        ModeloZapatoServicelpml t = new ModeloZapatoServicelpml(this.modeloZapatoRepository,new ModelMapper());
+        ModeloZapatoServicelpml t = new ModeloZapatoServicelpml(this.modeloZapatoRepository,null, new ModelMapper());
         ModeloZapato m = new ModeloZapato(
                 1,
                 "marron",

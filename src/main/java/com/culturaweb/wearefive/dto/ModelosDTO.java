@@ -8,5 +8,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ModelosDTO {
-    private List<ModeloZapatoEnviadoDTO> modeloZapatos;
+    private List<ModeloZapatoEnviadoDTO> modelosZapatos;
 }
