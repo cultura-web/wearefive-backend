@@ -4,6 +4,8 @@ import com.culturaweb.wearefive.dto.CreacionProcesoDTO;
 import com.culturaweb.wearefive.dto.MaterialEnProcesoDTO;
 import com.culturaweb.wearefive.exceptions.MaterialNoEncontradoException;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
+import com.culturaweb.wearefive.exceptions.ProcesoDeUnModeloYaExisteException;
+import com.culturaweb.wearefive.exceptions.ProcesoNoExisteException;
 import com.culturaweb.wearefive.model.Material;
 import com.culturaweb.wearefive.model.MaterialDeProceso;
 import com.culturaweb.wearefive.model.ModeloZapato;
@@ -39,8 +41,10 @@ public class ProcesosServiceImpl implements IProcesosService{
         Optional<ModeloZapato> optional = this.modeloZapatoRepository.findById(idModelo);
         if(optional.isEmpty())
             throw new ModeloDeZapatoNoExisteException();
-        ModeloZapato m = optional.get();
+        if(this.procesoRepository.existsByNombreEqualsAndModeloZapato_IdEquals(procesoDTO.getNombre(),idModelo))
+            throw new ProcesoDeUnModeloYaExisteException();
 
+        ModeloZapato m = optional.get();
         List<Material> materiales = getMateriales(procesoDTO.getMateriales());
         Proceso p =mapearProceso(m,procesoDTO.getNombre(),procesoDTO.getDetalle(),materiales,procesoDTO.getMateriales());
 
@@ -49,8 +53,32 @@ public class ProcesosServiceImpl implements IProcesosService{
             MaterialDeProceso materialDeProceso = new MaterialDeProceso(iterator.next().getCantidad(),material,p);
             this.materialDeProcesoRepository.save(materialDeProceso);
         }
-        m.setCosto(m.getCosto()+p.getCostoTotal());
-        this.modeloZapatoRepository.save(m);
+        return "OK";
+    }
+
+    @Override
+    public String editarProcesoAMaterial(CreacionProcesoDTO procesoDTO, int idProceso) {
+        Optional<Proceso> optional = this.procesoRepository.findById(idProceso);
+        if(optional.isEmpty())
+            throw new ProcesoNoExisteException();
+        Proceso p = optional.get();
+        if(!p.getNombre().equals(procesoDTO.getNombre())){
+            if(this.procesoRepository.existsByNombreEqualsAndModeloZapato_IdEquals(procesoDTO.getNombre(),p.getModeloZapato().getId()))
+                throw new ProcesoDeUnModeloYaExisteException();
+        }
+        List<Material> materiales = getMateriales(procesoDTO.getMateriales());
+
+        p.setNombre(procesoDTO.getNombre());
+        p.setDetalle(procesoDTO.getDetalle());
+        p.setCostoTotal(calcularCostoTotal(materiales,procesoDTO.getMateriales()));
+        Iterator<MaterialEnProcesoDTO> iterator = procesoDTO.getMateriales().iterator();
+        Iterator<Material> iteratorMaterial = materiales.iterator();
+        for(MaterialDeProceso mp:p.getMaterialDeProcesos())
+        {
+            mp.setCantidad(iterator.next().getCantidad());
+            mp.setMaterial(iteratorMaterial.next());
+        }
+        this.procesoRepository.save(p);
         return "OK";
     }
 

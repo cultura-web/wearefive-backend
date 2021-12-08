@@ -10,4 +10,6 @@ import java.util.List;
 public interface IProcesoRepository extends JpaRepository<Proceso,Integer> {
     List<Proceso> findByModeloZapato_IdEquals(Integer id);
 
+    boolean existsByNombreEqualsAndModeloZapato_IdEquals(String nombre, Integer id);
+
 }
