@@ -54,6 +54,7 @@ public class ModeloZapatoController {
         return new ResponseEntity(r,HttpStatus.OK);
     }
 
+    //TODO editar busqueda que no sea case sensitive
     @GetMapping("/model/{nombre}")
     public ResponseEntity<ModelosDTO> buscarModelosZapatos(@PathVariable(value = "nombre") String nombre)
     {

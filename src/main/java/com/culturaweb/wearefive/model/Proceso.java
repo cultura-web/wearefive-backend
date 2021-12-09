@@ -28,7 +28,7 @@ public class Proceso {
     @Column(name = "costo_total")
     private int costoTotal;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "modelo_zapato_id")
     private ModeloZapato modeloZapato;
 

@@ -16,6 +16,7 @@ import com.culturaweb.wearefive.repository.IModeloZapatoRepository;
 import com.culturaweb.wearefive.repository.IProcesoRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -80,6 +81,22 @@ public class ProcesosServiceImpl implements IProcesosService{
         }
         this.procesoRepository.save(p);
         return "OK";
+    }
+
+    @Override
+    @Transactional()
+    public String eliminarProcesoAMaterial(int idProceso) {
+        if(!this.procesoRepository.existsById(idProceso))
+            throw new ProcesoNoExisteException();
+        this.materialDeProcesoRepository.removeByProceso_IdEquals(idProceso);
+        return "OK";
+    }
+
+    private Proceso getProceso(int idProceso){
+        Optional<Proceso> optional = this.procesoRepository.findById(idProceso);
+        if(optional.isEmpty())
+            throw new ProcesoNoExisteException();
+        return optional.get();
     }
 
     private List<Material> getMateriales(List<MaterialEnProcesoDTO> mat){
