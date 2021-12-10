@@ -2,16 +2,13 @@ package com.culturaweb.wearefive.unit;
 
 import com.culturaweb.wearefive.dto.*;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
-import com.culturaweb.wearefive.exceptions.QANoExisteException;
 import com.culturaweb.wearefive.model.ModeloZapato;
-import com.culturaweb.wearefive.model.QA;
 import com.culturaweb.wearefive.repository.IModeloZapatoRepository;
 import com.culturaweb.wearefive.repository.IProcesoRepository;
-import com.culturaweb.wearefive.service.ModeloZapatoServicelpml;
+import com.culturaweb.wearefive.service.ModeloZapatoServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class ModeloZapatoServiceUT {
 
     @InjectMocks
-    ModeloZapatoServicelpml tested;
+    ModeloZapatoServiceImpl tested;
 
     @Mock
     IModeloZapatoRepository modeloZapatoRepository;
@@ -65,7 +62,7 @@ public class ModeloZapatoServiceUT {
     public void testDetallarModeloZapato()
     {
         //arrange
-        ModeloZapatoServicelpml t = new ModeloZapatoServicelpml(this.modeloZapatoRepository,null, new ModelMapper());
+        ModeloZapatoServiceImpl t = new ModeloZapatoServiceImpl(this.modeloZapatoRepository,null,null, new ModelMapper());
         ModeloZapato m = new ModeloZapato(
                 1,
                 "marron",
@@ -78,6 +75,7 @@ public class ModeloZapatoServiceUT {
                 "algodon",
                 "prueba.com",
                 "bota",
+                null,
                 null);
         Optional<ModeloZapato> optional = Optional.of(m);
         when(this.modeloZapatoRepository.findById(anyInt())).thenReturn(optional);

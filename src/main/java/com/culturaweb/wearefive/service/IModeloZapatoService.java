@@ -1,9 +1,6 @@
 package com.culturaweb.wearefive.service;
 
-import com.culturaweb.wearefive.dto.CostosModeloDTO;
-import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
-import com.culturaweb.wearefive.dto.ModeloZapatoRequestDTO;
-import com.culturaweb.wearefive.dto.ModelosDTO;
+import com.culturaweb.wearefive.dto.*;
 
 public interface IModeloZapatoService {
     public void agregarModelo(ModeloZapatoRequestDTO modelo);
@@ -19,4 +16,8 @@ public interface IModeloZapatoService {
     public ModelosDTO buscarZapatosPorNombre(String nombre);
 
     public CostosModeloDTO getCostosModelo(int id);
+
+    public StockModeloDTO consultarStock(int id);
+
+    public String actualizarStock(StockModeloDTO payload);
 }

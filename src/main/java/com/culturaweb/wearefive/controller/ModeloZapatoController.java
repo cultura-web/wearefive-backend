@@ -1,10 +1,8 @@
 package com.culturaweb.wearefive.controller;
 
-import com.culturaweb.wearefive.dto.CostosModeloDTO;
-import com.culturaweb.wearefive.dto.DetalleModeloZapatoDTO;
-import com.culturaweb.wearefive.dto.ModeloZapatoRequestDTO;
-import com.culturaweb.wearefive.dto.ModelosDTO;
+import com.culturaweb.wearefive.dto.*;
 import com.culturaweb.wearefive.service.IModeloZapatoService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,8 +61,24 @@ public class ModeloZapatoController {
     }
 
     @GetMapping("/model/{idModelo}/costs")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<CostosModeloDTO> getCostoDeUnModelo(@PathVariable(value = "idModelo") int id){
         CostosModeloDTO r = this.modeloZapatoService.getCostosModelo(id);
         return new ResponseEntity(r,HttpStatus.OK);
+    }
+
+    @GetMapping("/model/{idModelo}/stock")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<StockModeloDTO> consultarStock(@PathVariable(value = "idModelo") int id){
+        StockModeloDTO r = this.modeloZapatoService.consultarStock(id);
+        return new ResponseEntity(r,HttpStatus.OK);
+    }
+
+    @PostMapping("/model/{idModelo}/stock")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<String> actualizarStock(@Valid @RequestBody StockModeloDTO payload){
+        this.modeloZapatoService.actualizarStock(payload);
+        return new ResponseEntity<>("OK",HttpStatus.OK);
+
     }
 }
