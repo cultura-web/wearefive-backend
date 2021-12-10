@@ -54,6 +54,9 @@ public class ModeloZapato {
     @OneToMany(mappedBy = "modeloZapato")
     private List<Proceso> procesos;
 
+    @OneToMany(mappedBy = "modeloZapato", cascade = CascadeType.ALL)
+    private List<EjemplarZapato> ejemplares;
+
     public ModeloZapato(Integer id, Integer precioUnitario, Integer descuento, String nombre, String imagenurl) {
         this.id = id;
         this.precioUnitario = precioUnitario;

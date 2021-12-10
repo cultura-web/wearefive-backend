@@ -23,4 +23,16 @@ public class ProcesosController {
         this.procesosService.agregarProcesoAMaterial(procesoDTO,idModelo);
         return new ResponseEntity<>("proceso agregado!",HttpStatus.OK);
     }
+
+    @PutMapping("/process/{idProceso}")
+    public ResponseEntity<String> editarProcesoAModelo(@Valid @RequestBody CreacionProcesoDTO procesoDTO, @PathVariable(value = "idProceso") int idProceso){
+        this.procesosService.editarProcesoAMaterial(procesoDTO, idProceso);
+        return new ResponseEntity<>("Proceso editado!", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/process/{idProceso}")
+    public ResponseEntity<String> eliminarProcesoAModelo(@PathVariable(value = "idProceso") int idProceso){
+        this.procesosService.eliminarProcesoAMaterial(idProceso);
+        return new ResponseEntity<>("Proceso eliminado!",HttpStatus.OK);
+    }
 }

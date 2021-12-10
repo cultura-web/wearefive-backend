@@ -21,3 +21,13 @@ VALUES (1, 'negro', 8000, 10000, 50, 'ITADORI', 'Economico y artesanal, proporci
 INSERT INTO material (id, nombre, detalle, precio_unitario, unidad)
 VALUES (1, 'suela de poliester', 'suelas especiales para zapato tipo tenis', 1000, 'unidad'),
        (2, 'cordones de algodon', 'cordones hechos en algodon', 500, 'par');
+
+INSERT INTO proceso (id, nombre, detalle, costo_total, modelo_zapato_id)
+VALUES (1, 'cocer', 'para este proceso es necesario contar con maquina de cocer y materiales necesarios', 15000, 1),
+       (2, 'cortar', 'para este proceso es necesario contar con cortadora y materiales de cortado', 10000, 1);
+
+INSERT INTO material_de_proceso (id, cantidad, material_id, proceso_id)
+VALUES (1, 10, 1, 1),
+       (2, 10, 2, 1),
+       (3, 5, 1, 2),
+       (4, 10, 2, 2);

@@ -72,4 +72,16 @@ public class ControllerExceptionHandler {
         ErrorDTO error = new ErrorDTO("MaterialNoEncontradoException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ProcesoNoExisteException.class)
+    protected ResponseEntity<ErrorDTO> procesoNoExiste(ProcesoNoExisteException e) {
+        ErrorDTO error = new ErrorDTO("ProcesoNoExisteException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProcesoDeUnModeloYaExisteException.class)
+    protected ResponseEntity<ErrorDTO> procesoDeUnModeloYaExisteException(ProcesoDeUnModeloYaExisteException e) {
+        ErrorDTO error = new ErrorDTO("ProcesoDeUnModeloYaExisteException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
