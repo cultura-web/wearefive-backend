@@ -25,7 +25,7 @@ public class MaterialDeProceso {
     @JoinColumn(name = "material_id")
     private Material material;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "proceso_id")
     private Proceso proceso;
 

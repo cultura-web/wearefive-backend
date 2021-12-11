@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProcesosServiceImpl implements IProcesosService{
+public class ProcesosServiceImpl implements IProcesosService {
 
     private final IProcesoRepository procesoRepository;
     private final IModeloZapatoRepository modeloZapatoRepository;
@@ -40,45 +40,57 @@ public class ProcesosServiceImpl implements IProcesosService{
     @Override
     public String agregarProcesoAMaterial(CreacionProcesoDTO procesoDTO, int idModelo) {
         Optional<ModeloZapato> optional = this.modeloZapatoRepository.findById(idModelo);
-        if(optional.isEmpty())
+        if (optional.isEmpty())
             throw new ModeloDeZapatoNoExisteException();
-        if(this.procesoRepository.existsByNombreEqualsAndModeloZapato_IdEquals(procesoDTO.getNombre(),idModelo))
+        if (this.procesoRepository.existsByNombreEqualsAndModeloZapato_IdEquals(procesoDTO.getNombre(), idModelo))
             throw new ProcesoDeUnModeloYaExisteException();
 
         ModeloZapato m = optional.get();
         List<Material> materiales = getMateriales(procesoDTO.getMateriales());
-        Proceso p =mapearProceso(m,procesoDTO.getNombre(),procesoDTO.getDetalle(),materiales,procesoDTO.getMateriales());
+        Proceso p = mapearProceso(m, procesoDTO.getNombre(), procesoDTO.getDetalle(), materiales, procesoDTO.getMateriales());
 
         Iterator<MaterialEnProcesoDTO> iterator = procesoDTO.getMateriales().iterator();
-        for(Material material:materiales){
-            MaterialDeProceso materialDeProceso = new MaterialDeProceso(iterator.next().getCantidad(),material,p);
+        for (Material material : materiales) {
+            MaterialDeProceso materialDeProceso = new MaterialDeProceso(iterator.next().getCantidad(), material, p);
             this.materialDeProcesoRepository.save(materialDeProceso);
         }
         return "OK";
     }
 
     @Override
+    @Transactional
     public String editarProcesoAMaterial(CreacionProcesoDTO procesoDTO, int idProceso) {
-        Optional<Proceso> optional = this.procesoRepository.findById(idProceso);
-        if(optional.isEmpty())
-            throw new ProcesoNoExisteException();
-        Proceso p = optional.get();
+        Proceso p = getProceso(idProceso);
         if(!p.getNombre().equals(procesoDTO.getNombre())){
             if(this.procesoRepository.existsByNombreEqualsAndModeloZapato_IdEquals(procesoDTO.getNombre(),p.getModeloZapato().getId()))
                 throw new ProcesoDeUnModeloYaExisteException();
         }
-        List<Material> materiales = getMateriales(procesoDTO.getMateriales());
+        List<Material> nuevosMateriales = getMateriales(procesoDTO.getMateriales());
 
         p.setNombre(procesoDTO.getNombre());
         p.setDetalle(procesoDTO.getDetalle());
-        p.setCostoTotal(calcularCostoTotal(materiales,procesoDTO.getMateriales()));
+        p.setCostoTotal(calcularCostoTotal(nuevosMateriales,procesoDTO.getMateriales()));
         Iterator<MaterialEnProcesoDTO> iterator = procesoDTO.getMateriales().iterator();
-        Iterator<Material> iteratorMaterial = materiales.iterator();
+        Iterator<Material> iteratorMaterial = nuevosMateriales.iterator();
+
+        List<MaterialDeProceso> materialesABorrar = new ArrayList<>();
         for(MaterialDeProceso mp:p.getMaterialDeProcesos())
         {
-            mp.setCantidad(iterator.next().getCantidad());
-            mp.setMaterial(iteratorMaterial.next());
+            if(iterator.hasNext() && iteratorMaterial.hasNext()){
+                mp.setCantidad(iterator.next().getCantidad());
+                mp.setMaterial(iteratorMaterial.next());
+            }else{
+                    materialesABorrar.add(mp);
+            }
         }
+        while(iterator.hasNext() && iteratorMaterial.hasNext())
+            p.getMaterialDeProcesos().add(new MaterialDeProceso(iterator.next().getCantidad(),iteratorMaterial.next(),p));
+
+        for (MaterialDeProceso mp:materialesABorrar){
+            p.getMaterialDeProcesos().remove(mp);
+            this.materialDeProcesoRepository.deleteById(mp.getId());
+        }
+
         this.procesoRepository.save(p);
         return "OK";
     }
@@ -86,40 +98,40 @@ public class ProcesosServiceImpl implements IProcesosService{
     @Override
     @Transactional()
     public String eliminarProcesoAMaterial(int idProceso) {
-        if(!this.procesoRepository.existsById(idProceso))
+        if (!this.procesoRepository.existsById(idProceso))
             throw new ProcesoNoExisteException();
         this.materialDeProcesoRepository.removeByProceso_IdEquals(idProceso);
         return "OK";
     }
 
-    private Proceso getProceso(int idProceso){
+    private Proceso getProceso(int idProceso) {
         Optional<Proceso> optional = this.procesoRepository.findById(idProceso);
-        if(optional.isEmpty())
+        if (optional.isEmpty())
             throw new ProcesoNoExisteException();
         return optional.get();
     }
 
-    private List<Material> getMateriales(List<MaterialEnProcesoDTO> mat){
+    private List<Material> getMateriales(List<MaterialEnProcesoDTO> mat) {
         List<Material> materiales = new ArrayList<>();
-        for(MaterialEnProcesoDTO m:mat){
+        for (MaterialEnProcesoDTO m : mat) {
             Optional<Material> optionalMaterial = this.materialRepository.findById(m.getIdMaterial());
-            if(optionalMaterial.isEmpty())
+            if (optionalMaterial.isEmpty())
                 throw new MaterialNoEncontradoException();
             materiales.add(optionalMaterial.get());
         }
         return materiales;
     }
 
-    private Proceso mapearProceso(ModeloZapato m, String nombre, String detalle, List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTO){
-        int costoTotal = calcularCostoTotal(materiales,materialEnProcesoDTO);
-        return new Proceso(nombre,detalle,costoTotal,m);
+    private Proceso mapearProceso(ModeloZapato m, String nombre, String detalle, List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTO) {
+        int costoTotal = calcularCostoTotal(materiales, materialEnProcesoDTO);
+        return new Proceso(nombre, detalle, costoTotal, m);
     }
 
-    private int calcularCostoTotal(List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTOS){
+    private int calcularCostoTotal(List<Material> materiales, List<MaterialEnProcesoDTO> materialEnProcesoDTOS) {
         Iterator<MaterialEnProcesoDTO> iterator = materialEnProcesoDTOS.iterator();
         int r = 0;
-        for(Material m:materiales){
-            r += m.getPrecioUnitario()*iterator.next().getCantidad();
+        for (Material m : materiales) {
+            r += m.getPrecioUnitario() * iterator.next().getCantidad();
         }
         return r;
     }
