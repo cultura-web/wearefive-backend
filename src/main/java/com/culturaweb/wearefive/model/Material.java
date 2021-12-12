@@ -31,7 +31,7 @@ public class Material {
     @Column(name = "unidad")
     private String unidad;
 
-    @OneToMany(mappedBy = "material")
+    @OneToMany(mappedBy = "material", cascade = CascadeType.REMOVE)
     private List<MaterialDeProceso> materialDeProcesos;
 
     public Material(String nombre, String detalle, int precioUnitario, String unidad) {
