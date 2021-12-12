@@ -100,7 +100,7 @@ public class ProcesosServiceImpl implements IProcesosService {
     public String eliminarProcesoAMaterial(int idProceso) {
         if (!this.procesoRepository.existsById(idProceso))
             throw new ProcesoNoExisteException();
-        this.materialDeProcesoRepository.removeByProceso_IdEquals(idProceso);
+        this.procesoRepository.deleteById(idProceso);
         return "OK";
     }
 
