@@ -76,6 +76,7 @@ public class ModeloZapatoServiceUT {
                 "prueba.com",
                 "bota",
                 null,
+                null,
                 null);
         Optional<ModeloZapato> optional = Optional.of(m);
         when(this.modeloZapatoRepository.findById(anyInt())).thenReturn(optional);

@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/qa").permitAll()
                 .antMatchers("/api/products/list").permitAll()
                 .antMatchers("/api/products/model").permitAll()
+                .antMatchers("/api/products/model/{idModelo}/stock").permitAll()
                 .antMatchers("/api/products/model/{nombre}").permitAll()
                 .antMatchers("/h2-console/**/**").permitAll()
                 .anyRequest().authenticated().and().headers().frameOptions().sameOrigin()

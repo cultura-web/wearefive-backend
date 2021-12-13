@@ -17,12 +17,15 @@ public class EjemplarZapato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
 
     @Column(name = "talla")
     private String talla;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @Column(name = "status")
+    private String status;
+
+    @ManyToOne()
     @JoinColumn(name = "modelo_zapato_id")
     private ModeloZapato modeloZapato;
 

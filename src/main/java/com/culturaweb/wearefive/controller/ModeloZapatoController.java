@@ -68,7 +68,6 @@ public class ModeloZapatoController {
     }
 
     @GetMapping("/model/{idModelo}/stock")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<StockModeloDTO> consultarStock(@PathVariable(value = "idModelo") int id){
         StockModeloDTO r = this.modeloZapatoService.consultarStock(id);
         return new ResponseEntity(r,HttpStatus.OK);

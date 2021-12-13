@@ -49,4 +49,12 @@ public class Usuario {
         this.contrasena = contrasena;
         this.correo = correo;
     }
+
+
+    public String clienteToString() {
+        return  "nombre: " + nombres + " " + apellidos + "\n" +
+                "correo: " + correo + "\n" +
+                "numero: " + cliente.getCelular() + "\n" +
+                "direccion: " + cliente.getDireccion();
+    }
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IEjemplarZapatoRepository extends JpaRepository<EjemplarZapato,Integer> {
+    long deleteByIdEquals(Integer id);
+
 }

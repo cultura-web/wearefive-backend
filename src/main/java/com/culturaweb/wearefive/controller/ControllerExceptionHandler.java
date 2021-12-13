@@ -84,4 +84,10 @@ public class ControllerExceptionHandler {
         ErrorDTO error = new ErrorDTO("ProcesoDeUnModeloYaExisteException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(SinStockException.class)
+    protected ResponseEntity<ErrorDTO> SinStockException(SinStockException e) {
+        ErrorDTO error = new ErrorDTO("SinStockException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
