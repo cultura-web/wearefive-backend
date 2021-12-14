@@ -210,7 +210,7 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
 
     private void aumentarStock(int cantidad, ModeloZapato modelo, String talla) {
         while (cantidad > 0) {
-            modelo.getEjemplares().add(new EjemplarZapato(talla,modelo));
+            modelo.getEjemplares().add(new EjemplarZapato(talla,"libre",modelo));
             cantidad--;
         }
     }

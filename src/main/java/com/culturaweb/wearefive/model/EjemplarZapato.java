@@ -29,8 +29,9 @@ public class EjemplarZapato {
     @JoinColumn(name = "modelo_zapato_id")
     private ModeloZapato modeloZapato;
 
-    public EjemplarZapato(String talla, ModeloZapato modeloZapato) {
+    public EjemplarZapato(String talla, String status,ModeloZapato modeloZapato) {
         this.talla = talla;
+        this.status = status;
         this.modeloZapato = modeloZapato;
     }
 }
