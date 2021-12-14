@@ -86,8 +86,20 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(SinStockException.class)
-    protected ResponseEntity<ErrorDTO> SinStockException(SinStockException e) {
+    protected ResponseEntity<ErrorDTO> sinStockException(SinStockException e) {
         ErrorDTO error = new ErrorDTO("SinStockException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EjemplarNoExisteException.class)
+    protected ResponseEntity<ErrorDTO> ejemplarNoExisteException(EjemplarNoExisteException e) {
+        ErrorDTO error = new ErrorDTO("EjemplarNoExisteException", e.MESSAGE);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EjemplarNoReservadoException.class)
+    protected ResponseEntity<ErrorDTO> ejemplarNoReservadoException(EjemplarNoReservadoException e) {
+        ErrorDTO error = new ErrorDTO("EjemplarNoReservadoException", e.MESSAGE);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

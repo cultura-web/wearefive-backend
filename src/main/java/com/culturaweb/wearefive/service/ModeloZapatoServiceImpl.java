@@ -178,31 +178,33 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
         return "OK";
     }
 
-    private int[] contarStock(List<EjemplarZapato> ejemplares){
+    private int[] contarStock(List<EjemplarZapato> ejemplares) {
         int[] tallas = new int[7];
         for (EjemplarZapato e : ejemplares) {
-            switch (e.getTalla()) {
-                case "37":
-                    tallas[0]++;
-                    break;
-                case "38":
-                    tallas[1]++;
-                    break;
-                case "39":
-                    tallas[2]++;
-                    break;
-                case "40":
-                    tallas[3]++;
-                    break;
-                case "41":
-                    tallas[4]++;
-                    break;
-                case "42":
-                    tallas[5]++;
-                    break;
-                case "43":
-                    tallas[6]++;
-                    break;
+            if (!e.getStatus().equals("reservado")) {
+                switch (e.getTalla()) {
+                    case "37":
+                        tallas[0]++;
+                        break;
+                    case "38":
+                        tallas[1]++;
+                        break;
+                    case "39":
+                        tallas[2]++;
+                        break;
+                    case "40":
+                        tallas[3]++;
+                        break;
+                    case "41":
+                        tallas[4]++;
+                        break;
+                    case "42":
+                        tallas[5]++;
+                        break;
+                    case "43":
+                        tallas[6]++;
+                        break;
+                }
             }
         }
         return tallas;
@@ -210,7 +212,7 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
 
     private void aumentarStock(int cantidad, ModeloZapato modelo, String talla) {
         while (cantidad > 0) {
-            modelo.getEjemplares().add(new EjemplarZapato(talla,"libre",modelo));
+            modelo.getEjemplares().add(new EjemplarZapato(talla, "libre", modelo));
             cantidad--;
         }
     }
@@ -221,11 +223,11 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
             if (e.getTalla().equals(talla)) {
                 borrados.add(e);
                 cantidad--;
-                if(cantidad == 0)
+                if (cantidad == 0)
                     break;
             }
         }
-        for (EjemplarZapato e:borrados) {
+        for (EjemplarZapato e : borrados) {
             modelo.getEjemplares().remove(e);
             this.ejemplarZapatoRepository.deleteById(e.getId());
         }

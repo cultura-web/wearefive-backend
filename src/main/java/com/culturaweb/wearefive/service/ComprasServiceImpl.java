@@ -1,6 +1,8 @@
 package com.culturaweb.wearefive.service;
 
 import com.culturaweb.wearefive.dto.DetalleCompraDTO;
+import com.culturaweb.wearefive.exceptions.EjemplarNoExisteException;
+import com.culturaweb.wearefive.exceptions.EjemplarNoReservadoException;
 import com.culturaweb.wearefive.exceptions.ModeloDeZapatoNoExisteException;
 import com.culturaweb.wearefive.exceptions.SinStockException;
 import com.culturaweb.wearefive.model.EjemplarZapato;
@@ -46,6 +48,8 @@ public class ComprasServiceImpl implements IComprasService {
         for (EjemplarZapato e : modelo.getEjemplares()) {
             if (e.getTalla().equals(talla) && e.getStatus().equals("libre")) {
                 ejemplar = e;
+                ejemplar.setStatus("reservado");
+                this.ejemplarZapatoRepository.save(ejemplar);
                 break;
             }
         }
@@ -53,10 +57,7 @@ public class ComprasServiceImpl implements IComprasService {
             throw new SinStockException();
 
         Usuario usuario = getUsuarioByToken(token.substring(7));
-
-        //modelo.getEjemplares().remove(ejemplar);
-        this.modeloRepository.save(modelo);
-        //this.ejemplarZapatoRepository.deleteByIdEquals(ejemplar.getId());
+        //this.modeloRepository.save(modelo);
 
         int total = (modelo.getPrecioUnitario() * (100 - modelo.getDescuento())) / 100;
         Factura f = new Factura(
@@ -75,6 +76,24 @@ public class ComprasServiceImpl implements IComprasService {
         this.emailService.enviarEmailDeVenta(f.toString());
 
         return r;
+    }
+
+    @Override
+    @Transactional
+    public String confirmarVenta(int idModelo, int idEjemplar) {
+        ModeloZapato modelo = getModeloZapato(idModelo);
+        Optional<EjemplarZapato> optional = this.ejemplarZapatoRepository.findById(idEjemplar);
+        if(optional.isEmpty())
+            throw new EjemplarNoExisteException();
+        EjemplarZapato ejemplar = optional.get();
+
+        if(!ejemplar.getStatus().equals("reservado")){
+            throw new EjemplarNoReservadoException();
+        }
+        modelo.getEjemplares().remove(ejemplar);
+        this.modeloRepository.save(modelo);
+        this.ejemplarZapatoRepository.deleteByIdEquals(ejemplar.getId());
+        return "OK";
     }
 
     private ModeloZapato getModeloZapato(int id) {
