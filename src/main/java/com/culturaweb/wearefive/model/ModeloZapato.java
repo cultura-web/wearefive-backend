@@ -51,7 +51,7 @@ public class ModeloZapato {
     @Column(name = "tipo", length = 45)
     private String tipo;
 
-    @OneToMany(mappedBy = "modeloZapato")
+    @OneToMany(mappedBy = "modeloZapato", cascade = CascadeType.ALL)
     private List<Proceso> procesos;
 
     @OneToMany(mappedBy = "modeloZapato", cascade = CascadeType.ALL)
