@@ -46,7 +46,7 @@ public class ModeloZapato {
     private String material;
 
     @Column(name = "imagenurl", length = 200)
-    private String imagenurl;
+    private String imagenUrl;
 
     @Column(name = "tipo", length = 45)
     private String tipo;
@@ -60,11 +60,11 @@ public class ModeloZapato {
     @OneToMany(mappedBy = "modeloZapato")
     private List<Factura> facturas;
 
-    public ModeloZapato(Integer id, Integer precioUnitario, Integer descuento, String nombre, String imagenurl) {
+    public ModeloZapato(Integer id, Integer precioUnitario, Integer descuento, String nombre, String imagenUrl) {
         this.id = id;
         this.precioUnitario = precioUnitario;
         this.descuento = descuento;
         this.nombre = nombre;
-        this.imagenurl = imagenurl;
+        this.imagenUrl = imagenUrl;
     }
 }

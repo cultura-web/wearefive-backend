@@ -46,4 +46,7 @@ public class ModeloZapatoRequestDTO {
     @Min(value = 0, message = "el porcentaje mínimo de descuento es 0%")
     @Max(value = 100, message = "el porcentaje máximo de descuento es 100%")
     private int descuento;
+
+    @NotEmpty(message = "La url de la imagen no puede quedar vacía")
+    private String imagenUrl;
 }

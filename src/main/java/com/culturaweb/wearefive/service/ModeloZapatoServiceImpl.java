@@ -13,7 +13,6 @@ import com.culturaweb.wearefive.repository.IEjemplarZapatoRepository;
 import com.culturaweb.wearefive.repository.IModeloZapatoRepository;
 import com.culturaweb.wearefive.repository.IProcesoRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
         List<ModeloZapato> zapatoList = this.modeloRepository.findAll();
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m : zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(), m.getNombre(), (m.getPrecioUnitario() * (100 - m.getDescuento())) / 100, m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(), m.getNombre(), (m.getPrecioUnitario() * (100 - m.getDescuento())) / 100, m.getImagenUrl()));
         return new ModelosDTO(zapatosEnviados);
     }
 
@@ -91,7 +90,7 @@ public class ModeloZapatoServiceImpl implements IModeloZapatoService {
         List<ModeloZapato> zapatoList = this.modeloRepository.findByNombreContains(nombre);
         List<ModeloZapatoEnviadoDTO> zapatosEnviados = new ArrayList<>();
         for (ModeloZapato m : zapatoList)
-            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(), m.getNombre(), (m.getPrecioUnitario() * (100 - m.getDescuento())) / 100, m.getImagenurl()));
+            zapatosEnviados.add(new ModeloZapatoEnviadoDTO(m.getId(), m.getNombre(), (m.getPrecioUnitario() * (100 - m.getDescuento())) / 100, m.getImagenUrl()));
         return new ModelosDTO(zapatosEnviados);
     }
 
